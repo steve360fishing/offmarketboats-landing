@@ -942,12 +942,12 @@ footer {
       <div class="waitlist__content">
         <p class="section-label">Early Access</p>
         <h2 id="waitlist-heading" class="waitlist__heading">Request Early Access</h2>
-        <form class="waitlist__form" onsubmit="event.preventDefault();">
+        <form class="waitlist__form" id="waitlist-form">
           <label for="waitlist-email" class="sr-only">Email address</label>
           <input type="email" id="waitlist-email" class="waitlist__input" placeholder="broker@email.com" required>
-          <button type="submit" class="waitlist__submit">Join Waitlist</button>
+          <button type="submit" class="waitlist__submit" id="waitlist-btn">Join Waitlist</button>
         </form>
-        <p class="waitlist__note">Limited to the first 50 verified brokers.</p>
+        <p class="waitlist__note" id="waitlist-note">Limited to the first 50 verified brokers.</p>
       </div>
     </div>
   </section>
@@ -972,6 +972,67 @@ footer {
     </div>
   </div>
 </footer>
+
+<script>
+(function() {
+  var SUPABASE_URL = 'https://jiatfrpcilbnslgxzhuu.supabase.co';
+  var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImppYXRmcnBjaWxibnNsZ3h6aHV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3MzI5MTYsImV4cCI6MjA5MDMwODkxNn0.vAM4K-8e-wn1LlBOklpZioehraBCSwGCOzkn0NbLMSw';
+
+  var form = document.getElementById('waitlist-form');
+  var emailInput = document.getElementById('waitlist-email');
+  var btn = document.getElementById('waitlist-btn');
+  var note = document.getElementById('waitlist-note');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var email = emailInput.value.trim();
+    if (!email) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+
+    fetch(SUPABASE_URL + '/rest/v1/waitlist', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ email: email })
+    })
+    .then(function(res) {
+      if (res.ok) {
+        form.innerHTML = '<p style="color: #2dd4a8; font-size: 1.25rem; font-weight: 600;">You\'re on the list!</p>';
+        note.textContent = 'We\'ll be in touch soon.';
+      } else if (res.status === 409) {
+        note.textContent = 'This email is already on the waitlist.';
+        note.style.color = '#f59e0b';
+        btn.disabled = false;
+        btn.textContent = 'Join Waitlist';
+      } else {
+        return res.text().then(function(t) {
+          if (t.indexOf('duplicate') !== -1 || t.indexOf('23505') !== -1) {
+            note.textContent = 'This email is already on the waitlist.';
+            note.style.color = '#f59e0b';
+          } else {
+            note.textContent = 'Something went wrong. Please try again.';
+            note.style.color = '#ef4444';
+          }
+          btn.disabled = false;
+          btn.textContent = 'Join Waitlist';
+        });
+      }
+    })
+    .catch(function() {
+      note.textContent = 'Something went wrong. Please try again.';
+      note.style.color = '#ef4444';
+      btn.disabled = false;
+      btn.textContent = 'Join Waitlist';
+    });
+  });
+})();
+</script>
 
 <script data-pplx-inline-edit>
 (function(){
