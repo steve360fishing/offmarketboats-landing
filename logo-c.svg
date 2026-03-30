@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" fill="none" aria-label="HELM">
+  <!-- Logo C: Pure typographic wordmark with shortened E middle bar -->
+  <g fill="currentColor">
+    <!-- H -->
+    <rect x="0" y="0" width="5" height="40"/>
+    <rect x="24" y="0" width="5" height="40"/>
+    <rect x="5" y="17.5" width="19" height="5"/>
+    <!-- E with shortened middle bar -->
+    <rect x="38" y="0" width="5" height="40"/>
+    <rect x="38" y="0" width="20" height="5"/>
+    <rect x="38" y="17.5" width="14" height="5"/>
+    <rect x="38" y="35" width="20" height="5"/>
+    <!-- L -->
+    <rect x="68" y="0" width="5" height="40"/>
+    <rect x="68" y="35" width="20" height="5"/>
+    <!-- M -->
+    <path d="M97,40 L97,0 L103,0 L114,18 L125,0 L131,0 L131,40 L126,40 L126,12 L116,28 L112,28 L102,12 L102,40 Z"/>
+  </g>
+</svg>

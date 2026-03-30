@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OffMarket — Off-Market Deals. Matched.</title>
+<meta name="description" content="The first purpose-built matching platform for off-market yacht deals. Verified brokers only.">
+
+<!-- Fonts: General Sans from Fontshare -->
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+
+<style>
+/* ========== DESIGN TOKENS ========== */
+:root {
+  /* Type scale */
+  --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+  --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+  --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+  --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
+  --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
+  --text-2xl:  clamp(2rem,     1.2rem  + 2.5vw,  3.5rem);
+  --text-3xl:  clamp(2.5rem,   1rem    + 4vw,    5rem);
+  --text-hero: clamp(3rem,     0.5rem  + 7vw,    8rem);
+
+  /* Spacing */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* Fonts */
+  --font-body: 'General Sans', 'Helvetica Neue', sans-serif;
+  --font-display: 'General Sans', 'Helvetica Neue', sans-serif;
+
+  /* Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+
+  /* Transition */
+  --transition-interactive: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Content widths */
+  --content-narrow: 640px;
+  --content-default: 960px;
+  --content-wide: 1200px;
+}
+
+/* ========== DARK-ONLY PALETTE ========== */
+/* Deep navy ocean palette — no light mode */
+:root, [data-theme="dark"] {
+  --color-bg:          #0A1628;
+  --color-surface:     #0F1D32;
+  --color-surface-2:   #13243D;
+  --color-border:      #1E3354;
+  --color-border-subtle: #162847;
+  --color-text:        #E8ECF1;
+  --color-text-secondary: #A8B5C8;
+  --color-text-muted:  #8E9DB4;
+  --color-text-faint:  #6B7D96;
+  --color-primary:     #14919B;
+  --color-primary-hover:#11B3BF;
+  --color-primary-active:#0C7A83;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.5);
+}
+
+/* ========== BASE RESET ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--space-16);
+}
+
+body {
+  min-height: 100dvh;
+  line-height: 1.6;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+img, picture, video, canvas, svg { display: block; max-width: 100%; height: auto; }
+input, button, textarea, select { font: inherit; color: inherit; }
+h1, h2, h3, h4, h5, h6 { text-wrap: balance; line-height: 1.15; }
+p, li, figcaption { text-wrap: pretty; max-width: 72ch; }
+
+::selection {
+  background: rgba(20, 145, 155, 0.3);
+  color: var(--color-text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+button { cursor: pointer; background: none; border: none; }
+
+a, button, [role="button"], input, textarea, select {
+  transition: color var(--transition-interactive),
+              background var(--transition-interactive),
+              border-color var(--transition-interactive),
+              box-shadow var(--transition-interactive);
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
+}
+
+/* ========== LAYOUT ========== */
+.container {
+  width: 100%;
+  max-width: var(--content-wide);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+.container--narrow {
+  max-width: var(--content-default);
+}
+
+/* ========== SECTION SPACING ========== */
+section {
+  padding-block: clamp(var(--space-16), 8vw, var(--space-32));
+}
+
+/* ========== HEADER / NAV ========== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding-block: var(--space-4);
+  background: rgba(10, 22, 40, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav__logo {
+  display: flex;
+  align-items: center;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.nav__logo svg {
+  height: 28px;
+  width: auto;
+}
+
+.logo-text {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.logo-text--off {
+  color: var(--color-accent);
+}
+
+.nav__cta {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  background: transparent;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  min-height: 40px;
+}
+
+.nav__cta:hover {
+  background: rgba(20, 145, 155, 0.1);
+  border-color: var(--color-primary-hover);
+  color: var(--color-primary-hover);
+}
+
+/* ========== HERO ========== */
+.hero {
+  padding-top: clamp(calc(var(--space-32) + var(--space-8)), 14vw, 12rem);
+  padding-bottom: clamp(var(--space-16), 8vw, var(--space-32));
+  text-align: left;
+
+}
+
+.hero__content {
+  max-width: 720px;
+}
+
+.hero__name {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  color: #FFFFFF;
+  margin-bottom: var(--space-4);
+}
+
+.hero__tagline {
+  font-size: var(--text-xl);
+  font-weight: 500;
+  color: var(--color-primary);
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-6);
+}
+
+.hero__description {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  max-width: 560px;
+  margin-bottom: var(--space-8);
+}
+
+.hero__cta-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-8);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #0A1628;
+  background: var(--color-primary);
+  border: none;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  cursor: pointer;
+  min-height: 48px;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-hover);
+}
+
+.btn-primary svg {
+  width: 16px;
+  height: 16px;
+  display: inline;
+}
+
+.hero__trust {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+
+
+/* ========== BROKER-FIRST SECTION ========== */
+.broker-first {
+  padding-block: clamp(var(--space-12), 6vw, var(--space-24));
+}
+
+.broker-first__header {
+  margin-bottom: var(--space-4);
+}
+
+.broker-first__lead {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  max-width: 680px;
+  line-height: 1.6;
+  margin-bottom: var(--space-12);
+}
+
+.broker-first__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+}
+
+@media (max-width: 640px) {
+  .broker-first__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.broker-first__item {
+  padding: var(--space-6);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.broker-first__icon {
+  width: 36px;
+  height: 36px;
+  color: var(--color-accent);
+  margin-bottom: var(--space-4);
+}
+
+.broker-first__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.broker-first__title {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+.broker-first__desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+
+/* ========== PROBLEM SECTION ========== */
+.problem {
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.problem__header {
+  margin-bottom: clamp(var(--space-8), 4vw, var(--space-16));
+}
+
+.section-label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+}
+
+.section-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+}
+
+.problem__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .problem__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+}
+
+.problem__card {
+  padding: var(--space-8);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.problem__stat {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.2;
+  margin-bottom: var(--space-4);
+}
+
+.problem__stat-desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.problem__source {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  margin-top: var(--space-3);
+}
+
+/* ========== HOW IT WORKS ========== */
+.how {
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.how__header {
+  margin-bottom: clamp(var(--space-8), 4vw, var(--space-16));
+}
+
+.how__steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .how__steps {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+}
+
+.how__step {
+  position: relative;
+  padding: var(--space-8);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.how__step-number {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--color-border);
+  line-height: 1;
+  margin-bottom: var(--space-4);
+}
+
+.how__step-title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: var(--space-3);
+}
+
+.how__step-desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* ========== TRUST SECTION ========== */
+.trust {
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.trust__header {
+  margin-bottom: clamp(var(--space-8), 4vw, var(--space-16));
+}
+
+.trust__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .trust__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+}
+
+.trust__card {
+  display: flex;
+  gap: var(--space-5);
+  padding: var(--space-8);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.trust__icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  color: var(--color-primary);
+}
+
+.trust__card-title {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: var(--space-2);
+}
+
+.trust__card-desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* ========== AUDIENCE SECTION ========== */
+.audience {
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.audience__content {
+  max-width: 720px;
+}
+
+.audience__text {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.audience__text strong {
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* ========== WAITLIST CTA ========== */
+.waitlist {
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.waitlist__content {
+  max-width: 560px;
+}
+
+.waitlist__heading {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  margin-bottom: var(--space-6);
+}
+
+.waitlist__form {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.waitlist__input {
+  flex: 1;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  min-height: 48px;
+}
+
+.waitlist__input::placeholder {
+  color: var(--color-text-faint);
+}
+
+.waitlist__input:focus {
+  border-color: var(--color-primary);
+}
+
+.waitlist__submit {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #0A1628;
+  background: var(--color-primary);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  min-height: 48px;
+}
+
+.waitlist__submit:hover {
+  background: var(--color-primary-hover);
+}
+
+.waitlist__note {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 480px) {
+  .waitlist__form {
+    flex-direction: column;
+  }
+}
+
+/* ========== FOOTER ========== */
+footer {
+  padding-block: var(--space-12);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .footer__inner {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.footer__logo .logo-text {
+  font-size: var(--text-base);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.footer__company {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+}
+
+.footer__links {
+  display: flex;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.footer__link {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.footer__link:hover {
+  color: var(--color-text-muted);
+}
+
+.footer__attribution {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  text-decoration: none;
+}
+
+.footer__attribution:hover {
+  color: var(--color-text-muted);
+}
+
+/* ========== MOBILE WAITLIST ========== */
+@media (max-width: 480px) {
+  .waitlist__submit {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ========== DIVIDER BETWEEN SECTIONS ========== */
+.section-divider {
+  width: 48px;
+  height: 1px;
+  background: var(--color-primary);
+  margin-bottom: var(--space-6);
+}
+</style>
+</head>
+<body>
+
+<!-- Skip Link -->
+<a href="#main" class="sr-only" style="position:absolute;top:0;left:0;padding:1rem;background:var(--color-primary);color:#0A1628;z-index:200;">Skip to content</a>
+
+<!-- ========== HEADER ========== -->
+<header>
+  <nav class="container nav" aria-label="Primary">
+    <a href="#" class="nav__logo" aria-label="OffMarket — Home">
+      <span class="logo-text"><span class="logo-text--off">Off</span>Market</span>
+    </a>
+    <a href="#waitlist" class="nav__cta">Request Early Access</a>
+  </nav>
+</header>
+
+<!-- ========== MAIN ========== -->
+<main id="main">
+
+  <!-- SECTION 1: HERO -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="container">
+      <div class="hero__content">
+        <h1 id="hero-heading" class="hero__name">OffMarket</h1>
+        <p class="hero__tagline">Off-Market Deals. Matched.</p>
+        <p class="hero__description">Brokers describe what they have or what their client wants. Our engine matches every vessel against every buyer mandate — automatically, with a match percentage. No public listings. No exposure.</p>
+        <div class="hero__cta-group">
+          <a href="#waitlist" class="btn-primary">
+            Request Early Access
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <p class="hero__trust">Invitation-only for licensed yacht brokers</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION: BROKER-FIRST -->
+  <section class="broker-first" aria-labelledby="broker-first-heading">
+    <div class="container">
+      <div class="broker-first__header">
+        <p class="section-label">Built for Brokers</p>
+        <h2 id="broker-first-heading" class="section-heading">Your deals. Your clients. Your commission.</h2>
+      </div>
+      <p class="broker-first__lead">OffMarket exists to make your business stronger — not to replace it. Every feature is designed to protect your relationships, your commissions, and your role in the transaction.</p>
+      <div class="broker-first__grid">
+        <div class="broker-first__item">
+          <div class="broker-first__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="broker-first__title">You control access</h3>
+          <p class="broker-first__desc">You decide who sees your vessel. Set visibility to select brokers, verified members only, or your own hand-picked list. Nothing goes public without your say.</p>
+        </div>
+        <div class="broker-first__item">
+          <div class="broker-first__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v4M12 19v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M1 12h4M19 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          </div>
+          <h3 class="broker-first__title">No buyers go around you</h3>
+          <p class="broker-first__desc">Every introduction is timestamped and logged. You choose when and what to reveal — on your terms. Need an NDA first? Send one through the platform. Ready to connect? One click. Your procuring cause is documented automatically either way.</p>
+        </div>
+        <div class="broker-first__item">
+          <div class="broker-first__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3 class="broker-first__title">Wider reach, same discretion</h3>
+          <p class="broker-first__desc">Your phone list reaches 10 brokers. OffMarket matches your vessel against every qualified buyer mandate in the network — without a single public listing, screenshot, or leaked photo.</p>
+        </div>
+        <div class="broker-first__item">
+          <div class="broker-first__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <h3 class="broker-first__title">Your commission is protected</h3>
+          <p class="broker-first__desc">Standard 10% commission structure is preserved. The platform never takes a cut of your deal. We charge brokers a membership — not a percentage of your hard-earned sale.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: THE PROBLEM -->
+  <section class="problem" aria-labelledby="problem-heading">
+    <div class="container">
+      <div class="problem__header">
+        <p class="section-label">The Problem</p>
+        <h2 id="problem-heading" class="section-heading">Billions in deals. Zero infrastructure.</h2>
+      </div>
+      <div class="problem__grid">
+        <div class="problem__card">
+          <p class="problem__stat">$3B+</p>
+          <p class="problem__stat-desc">In yacht deals transacted off-market since 2020 — over phone calls and WhatsApp.</p>
+          <p class="problem__source">Source: Burgess Yachts</p>
+        </div>
+        <div class="problem__card">
+          <p class="problem__stat">42%</p>
+          <p class="problem__stat-desc">Of large yacht sales by value happen off-market with zero digital infrastructure.</p>
+          <p class="problem__source">Source: Burgess Yachts</p>
+        </div>
+        <div class="problem__card">
+          <p class="problem__stat">0</p>
+          <p class="problem__stat-desc">Purpose-built off-market matching platforms exist for yacht brokers. Until now.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: HOW IT WORKS -->
+  <section class="how" aria-labelledby="how-heading">
+    <div class="container">
+      <div class="how__header">
+        <p class="section-label">How It Works</p>
+        <h2 id="how-heading" class="section-heading">Three steps. Full protection.</h2>
+      </div>
+      <div class="how__steps">
+        <div class="how__step">
+          <p class="how__step-number">01</p>
+          <h3 class="how__step-title">Describe</h3>
+          <p class="how__step-desc">Brokers enter vessel specs or buyer criteria. No public listing. No exposure.</p>
+        </div>
+        <div class="how__step">
+          <p class="how__step-number">02</p>
+          <h3 class="how__step-title">Match</h3>
+          <p class="how__step-desc">Our engine scores every vessel against every buyer mandate. You see match percentages and exactly what aligns.</p>
+        </div>
+        <div class="how__step">
+          <p class="how__step-number">03</p>
+          <h3 class="how__step-title">Connect</h3>
+          <p class="how__step-desc">When both sides are interested, you decide what to reveal and when. Send documents, request NDAs, or connect directly. Every introduction is logged and protected.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: TRUST ARCHITECTURE -->
+  <section class="trust" aria-labelledby="trust-heading">
+    <div class="container">
+      <div class="trust__header">
+        <p class="section-label">Trust Architecture</p>
+        <h2 id="trust-heading" class="section-heading">Built for how brokers actually work.</h2>
+      </div>
+      <div class="trust__grid">
+        <div class="trust__card">
+          <div class="trust__icon">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="4" y="4" width="32" height="32" rx="2"/>
+              <path d="M14 20l4 4 8-8"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="trust__card-title">Verified Brokers Only</h3>
+            <p class="trust__card-desc">Every member is license-verified. Tiered access based on credentials and track record.</p>
+          </div>
+        </div>
+        <div class="trust__card">
+          <div class="trust__icon">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="20" cy="16" r="8"/>
+              <path d="M20 24v8M14 36h12"/>
+              <path d="M12 12h2M26 12h2M20 6v2"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="trust__card-title">Commission Protection</h3>
+            <p class="trust__card-desc">Every introduction is timestamped and logged. Procuring cause documentation is automatic.</p>
+          </div>
+        </div>
+        <div class="trust__card">
+          <div class="trust__icon">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="6" y="8" width="28" height="24" rx="2"/>
+              <path d="M6 14h28"/>
+              <path d="M20 20v6M17 23h6" stroke-opacity="0.5"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="trust__card-title">Watermarked Materials</h3>
+            <p class="trust__card-desc">Photos and documents are watermarked per viewer. Leaks are traceable.</p>
+          </div>
+        </div>
+        <div class="trust__card">
+          <div class="trust__icon">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M8 8h10v12H8z"/>
+              <path d="M22 20h10v12H22z"/>
+              <path d="M18 14h4v0a6 6 0 0 1 0 12h-4"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="trust__card-title">Documents on Your Terms</h3>
+            <p class="trust__card-desc">Need an NDA before revealing a high-end client? Send it through the platform. No mandatory paperwork — just tools available when you need them.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: WHO IT'S FOR -->
+  <section class="audience" aria-labelledby="audience-heading">
+    <div class="container">
+      <div class="audience__content">
+        <p class="section-label">Who It's For</p>
+        <h2 id="audience-heading" class="section-heading" style="margin-bottom: var(--space-6);">Your market. Your platform.</h2>
+        <p class="audience__text">Built for brokers who deal in <strong>sportfishing yachts, center consoles, express boats, and motor yachts</strong>. From 30-foot center consoles to 100-foot convertibles — if it's off-market, it belongs here.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: WAITLIST CTA -->
+  <section class="waitlist" id="waitlist" aria-labelledby="waitlist-heading">
+    <div class="container">
+      <div class="waitlist__content">
+        <p class="section-label">Early Access</p>
+        <h2 id="waitlist-heading" class="waitlist__heading">Request Early Access</h2>
+        <form class="waitlist__form" onsubmit="event.preventDefault();">
+          <label for="waitlist-email" class="sr-only">Email address</label>
+          <input type="email" id="waitlist-email" class="waitlist__input" placeholder="broker@email.com" required>
+          <button type="submit" class="waitlist__submit">Join Waitlist</button>
+        </form>
+        <p class="waitlist__note">Limited to the first 50 verified brokers.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a href="#" class="footer__logo" aria-label="OffMarket — Home">
+        <span class="logo-text"><span class="logo-text--off">Off</span>Market</span>
+      </a>
+      <p class="footer__company">A product of AH360 Photography LLC</p>
+      <p class="footer__company">Palm Beach Gardens, FL</p>
+    </div>
+    <div class="footer__links">
+      <a href="#" class="footer__link">Privacy</a>
+      <a href="#" class="footer__link">Terms</a>
+      <a href="#" class="footer__link">Contact</a>
+      <a href="https://www.perplexity.ai/computer" target="_blank" rel="noopener noreferrer" class="footer__attribution">Created with Perplexity Computer</a>
+    </div>
+  </div>
+</footer>
+
+<script data-pplx-inline-edit>
+(function(){
+  if(window===window.top)return;
+  function inlineAll(orig,clone){
+    if(orig.nodeType!==1)return;
+    try{
+      var cs=getComputedStyle(orig);
+      var t='';
+      for(var i=0;i<cs.length;i++){t+=cs[i]+':'+cs.getPropertyValue(cs[i])+';';}
+      clone.style.cssText=t;
+    }catch(e){}
+    var oc=orig.children,cc=clone.children;
+    for(var j=0;j<oc.length&&j<cc.length;j++){inlineAll(oc[j],cc[j]);}
+  }
+  function stripExternal(clone){
+    var imgs=clone.querySelectorAll('img');
+    for(var i=0;i<imgs.length;i++){
+      var s=imgs[i].getAttribute('src');
+      if(s&&!s.startsWith('data:'))imgs[i].removeAttribute('src');
+    }
+    var all=clone.querySelectorAll('*');
+    for(var i=0;i<all.length;i++){
+      var st=all[i].style.cssText;
+      if(st&&st.indexOf('url(')>=0){
+        all[i].style.cssText=st.replace(/url\(["']?(?!data:)[^)"']*["']?\)/gi,'none');
+      }
+    }
+  }
+  window.addEventListener('message',function(e){
+    if(!e.data||e.data.type!=='INLINE_EDIT_CAPTURE_REQUEST')return;
+    var scrollX=window.scrollX||window.pageXOffset||0;
+    var scrollY=window.scrollY||window.pageYOffset||0;
+    var w=window.innerWidth,h=window.innerHeight;
+    try{
+      var clone=document.documentElement.cloneNode(true);
+      var rm=clone.querySelectorAll('script,link[rel="stylesheet"],style');
+      for(var i=0;i<rm.length;i++){rm[i].remove();}
+      inlineAll(document.documentElement,clone);
+      stripExternal(clone);
+      var html=new XMLSerializer().serializeToString(clone);
+      var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'">'
+        +'<foreignObject width="100%" height="100%">'
+        +'<div xmlns="http://www.w3.org/1999/xhtml" style="width:'+w+'px;height:'+h+'px;overflow:hidden">'
+        +'<div style="transform:translate(-'+scrollX+'px,-'+scrollY+'px);transform-origin:top left">'
+        +html+'</div></div></foreignObject></svg>';
+      var svgUrl='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+      var img=new Image();
+      img.onload=function(){
+        var c=document.createElement('canvas');c.width=w;c.height=h;
+        c.getContext('2d').drawImage(img,0,0);
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:c.toDataURL('image/png'),scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.onerror=function(){
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.src=svgUrl;
+    }catch(err){
+      window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+    }
+  });
+})();
+</script></body>
+</html>
