@@ -782,7 +782,7 @@ footer {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
           <h3 class="broker-first__title">You control access</h3>
-          <p class="broker-first__desc">You decide who sees your vessel. Set visibility to select brokers, verified members only, or your own hand-picked list. Nothing goes public without your say.</p>
+          <p class="broker-first__desc">Matching is anonymous by design — other brokers see compatibility scores, never your client's name or vessel details. You decide what to reveal, when, and to whom. Your listing. Your client. Your relationship to protect.</p>
         </div>
         <div class="broker-first__item">
           <div class="broker-first__icon">
@@ -936,7 +936,28 @@ footer {
     </div>
   </section>
 
-  <!-- SECTION 6: WAITLIST CTA -->
+  <!-- SECTION 6: FREE FOR FOUNDING MEMBERS -->
+  <section class="pricing" aria-labelledby="pricing-heading" style="padding: var(--space-20) 0;">
+    <div class="container" style="max-width: 640px; text-align: center;">
+      <p class="section-label">Pricing</p>
+      <h2 id="pricing-heading" class="section-heading" style="margin-bottom: var(--space-6);">Free for founding members.</h2>
+      <p style="color: var(--text-secondary); font-size: 1.0625rem; line-height: 1.7; margin-bottom: var(--space-4);">
+        We need to understand how brokers use this platform before we set a price. That means founding members pay nothing — for at least the first year.
+      </p>
+      <p style="color: var(--text-secondary); font-size: 1.0625rem; line-height: 1.7; margin-bottom: var(--space-4);">
+        No credit card. No trial that expires. Just full access while we build this alongside you.
+      </p>
+      <p style="color: var(--text-secondary); font-size: 1.0625rem; line-height: 1.7; margin-bottom: var(--space-8);">
+        When pricing arrives, founding members get preferential terms. You helped shape it — you should benefit from that.
+      </p>
+      <div style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: 10px; background: rgba(20,145,155,0.08); border: 1px solid rgba(20,145,155,0.2);">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10l3.5 3.5L15 7" stroke="#14919B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="color: #14919B; font-weight: 600; font-size: 0.9375rem;">Free access for 12+ months. No strings.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: WAITLIST CTA -->
   <section class="waitlist" id="waitlist" aria-labelledby="waitlist-heading">
     <div class="container">
       <div class="waitlist__content">
@@ -945,9 +966,14 @@ footer {
         <form class="waitlist__form" id="waitlist-form">
           <label for="waitlist-email" class="sr-only">Email address</label>
           <input type="email" id="waitlist-email" class="waitlist__input" placeholder="broker@email.com" required>
+          <!-- Honeypot — invisible to humans, bots auto-fill -->
+          <div style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;overflow:hidden" aria-hidden="true">
+            <label for="wl-website">Website</label>
+            <input id="wl-website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
           <button type="submit" class="waitlist__submit" id="waitlist-btn">Join Waitlist</button>
         </form>
-        <p class="waitlist__note" id="waitlist-note">Limited to the first 50 verified brokers.</p>
+        <p class="waitlist__note" id="waitlist-note">Free for founding members. No credit card required.</p>
       </div>
     </div>
   </section>
@@ -975,53 +1001,49 @@ footer {
 
 <script>
 (function() {
-  var SUPABASE_URL = 'https://jiatfrpcilbnslgxzhuu.supabase.co';
-  var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImppYXRmcnBjaWxibnNsZ3h6aHV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3MzI5MTYsImV4cCI6MjA5MDMwODkxNn0.vAM4K-8e-wn1LlBOklpZioehraBCSwGCOzkn0NbLMSw';
+  var API_URL = 'https://offmarket-five.vercel.app/api/waitlist';
+  var pageLoadTime = Date.now();
 
   var form = document.getElementById('waitlist-form');
   var emailInput = document.getElementById('waitlist-email');
+  var honeypotInput = document.getElementById('wl-website');
   var btn = document.getElementById('waitlist-btn');
   var note = document.getElementById('waitlist-note');
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-    var email = emailInput.value.trim();
+    var email = emailInput.value.trim().toLowerCase();
     if (!email) return;
 
     btn.disabled = true;
     btn.textContent = 'Submitting...';
 
-    fetch(SUPABASE_URL + '/rest/v1/waitlist', {
+    fetch(API_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify({ email: email })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: email,
+        honeypot: honeypotInput ? honeypotInput.value : '',
+        elapsed_seconds: Math.round((Date.now() - pageLoadTime) / 1000),
+        user_agent: navigator.userAgent
+      })
     })
-    .then(function(res) {
-      if (res.ok) {
-        form.innerHTML = '<p style="color: #2dd4a8; font-size: 1.25rem; font-weight: 600;">You\'re on the list!</p>';
-        note.textContent = 'We\'ll be in touch soon.';
-      } else if (res.status === 409) {
-        note.textContent = 'This email is already on the waitlist.';
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.success && data.status === 'duplicate') {
+        note.textContent = 'You\'re already on the list. We\'ll be in touch.';
         note.style.color = '#f59e0b';
         btn.disabled = false;
         btn.textContent = 'Join Waitlist';
+      } else if (data.success) {
+        form.innerHTML = '<p style="color: #2dd4a8; font-size: 1.25rem; font-weight: 600;">You\'re on the list!</p>';
+        note.textContent = 'We\'ll reach out when it\'s time to get you set up.';
+        note.style.color = '';
       } else {
-        return res.text().then(function(t) {
-          if (t.indexOf('duplicate') !== -1 || t.indexOf('23505') !== -1) {
-            note.textContent = 'This email is already on the waitlist.';
-            note.style.color = '#f59e0b';
-          } else {
-            note.textContent = 'Something went wrong. Please try again.';
-            note.style.color = '#ef4444';
-          }
-          btn.disabled = false;
-          btn.textContent = 'Join Waitlist';
-        });
+        note.textContent = data.status === 'invalid_email' ? 'Please enter a valid email address.' : 'Something went wrong. Please try again.';
+        note.style.color = '#ef4444';
+        btn.disabled = false;
+        btn.textContent = 'Join Waitlist';
       }
     })
     .catch(function() {
